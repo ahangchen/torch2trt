@@ -4,20 +4,23 @@ from setuptools import setup, find_packages
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension, CppExtension
 
 def trt_inc_dir():
-    return "/usr/include/aarch64-linux-gnu"
+    # return "/usr/include/aarch64-linux-gnu"
+    return "/home/ubuntu/software/TensorRT-7.1.3.4/include"
 
 def trt_lib_dir():
-    return "/usr/lib/aarch64-linux-gnu"
+    return "/home/ubuntu/software/TensorRT-7.1.3.4/lib"
 
 ext_modules = []
 
 plugins_ext_module = CUDAExtension(
         name='plugins', 
         sources=[
-            'torch2trt/plugins/interpolate.cpp'
+            'torch2trt/plugins/interpolate.cpp',
+            'torch2trt/plugins/gridSamplerPlugin.cpp',
         ],
         include_dirs=[
-            trt_inc_dir()
+            trt_inc_dir(),
+            'torch2trt/plugins'
         ],
         library_dirs=[
             trt_lib_dir()
